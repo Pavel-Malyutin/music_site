@@ -4,11 +4,13 @@
 
 {% block content %}
 
-{%  for album in albums %}
+{%  for album in album_list %}
     <div class="col-md-4 product-men">
             <div class="product-shoe-info editContent text-center mt-lg-4" >
                 <div class="men-thumb-item">
-                    <img src="{{ album.cover.url }}" class="img-fluid" alt="" >
+                    <a href="{% url 'album_detail' album.url %}">
+                        <img src="{{ album.cover.url }}" class="img-fluid" alt="" >
+                    </a>
                 </div>
                 <div class="item-info-product">
                     <h4 class="">

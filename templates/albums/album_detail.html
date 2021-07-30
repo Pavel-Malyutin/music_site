@@ -18,7 +18,7 @@
             <li style="list-style: none"><span><b>Страна:</b> {{ album.country }}</span></li>
             <li style="list-style: none">
                 <span><b>Лейбл:</b> {% for lable in album.label.all %}{{ lable }} {% endfor %}</span></li>
-            <li style="list-style: none"><span><b>Музыканты:</b> {% for artist in album.artist.all %}<a href="artist/{{ artist.id }}">{{ artist }}</a> {% endfor %}</span></li>
+            <li style="list-style: none"><span><b>Музыканты:</b> {% for artist in album.artist.all %}<a href="">{{ artist }}</a> {% endfor %}</span></li>
             <li style="list-style: none"><span><b>Жанр:</b> {% for genre in album.genres.all %}{{ genre }} {% endfor %}</span>
             </li>
             <li style="list-style: none"><span><b>Дата выхода</b> {{ album.premiere }}</span>
@@ -73,15 +73,16 @@
                 </div>
                 <div class="clearfix"></div>
             </div>
+        </ul>
     </div>
 </div>
 <div class="row sub-para-w3layouts mt-5">
 
     <h3 class="shop-sing editContent" style="outline: none; cursor: inherit;">
-        Об альбоме {{ album.category }}: {{ album.title }}</h3>
+        Об альбоме {{ album.category }}: {{ album.title }}</h3><br>
     <p>
-        {% for image in album.cover.all %}
-        <img src="{{ image.url }}" class="img-fluid" alt="">
+        {% for image in album.images_set.all %}
+        <img src="{{ image.image.url }}" class="img-fluid img-albums-covers" alt="{{ image.title }}">
         {% endfor %}
     </p>
     <p class="editContent" style="outline: none; cursor: inherit;">
@@ -94,33 +95,32 @@
         <!-- contact form grid -->
         <div class="contact-single">
             <h3 class="editContent" style="outline: none; cursor: inherit;">
+                <p class="text-sm-start">Отзывов: {{ album.reviews_set.count }}</p>
                 <span class="sub-tittle editContent"
-                      style="outline: none; cursor: inherit;">02</span>Оставить отзыв</h3>
-            <form action="#" method="get" class="mt-4">
+                      style="outline: none; cursor: inherit;"></span>Оставить отзыв</h3>
+            <form action="{% url 'add_review' album.id %}" method="post" class="mt-4" id="formReview">
+                {% csrf_token %}
+                <input type="hidden" name="parent" id="contactparent" value="">
                 <div class="form-group editContent"
                      style="outline: none; cursor: inherit;">
-                    <label for="contactcomment" class="editContent"
-                           style="outline: none; cursor: inherit;">Ваш комментарий
-                        *</label>
-                    <textarea class="form-control border" rows="5"
-                              id="contactcomment" required=""></textarea>
+                    <label for="contactcomment" class="editContent">
+                        Ваш комментарий *
+                    </label>
+                    <textarea class="form-control border" rows="5" id="contactcomment" required="" name="text"></textarea>
                 </div>
                 <div class="d-sm-flex">
                     <div class="col-sm-6 form-group p-0 editContent"
                          style="outline: none; cursor: inherit;">
-                        <label for="contactusername" class="editContent"
-                               style="outline: none; cursor: inherit;">Имя
-                            *</label>
-                        <input type="text" class="form-control border"
-                               id="contactusername" required="">
+                        <label for="contactusername" class="editContent">
+                            Имя *
+                        </label>
+                        <input type="text" class="form-control border" id="contactusername" required="" name="name">
                     </div>
-                    <div class="col-sm-6 form-group ml-sm-3 editContent"
-                         style="outline: none; cursor: inherit;">
-                        <label for="contactemail" class="editContent"
-                               style="outline: none; cursor: inherit;">Email
-                            *</label>
-                        <input type="email" class="form-control border"
-                               id="contactemail" required="">
+                    <div class="col-sm-6 form-group ml-sm-3 editContent">
+                        <label for="contactemail" class="editContent" style="outline: none; cursor: inherit;">
+                            Email *
+                        </label>
+                        <input type="email" class="form-control border" id="contactemail" required="" name="email">
                     </div>
                 </div>
                 <button type="submit"
@@ -129,39 +129,38 @@
                 </button>
             </form>
         </div>
-        <!--  //contact form grid ends here -->
     </div>
-    <div class="media py-5">
-        <img src="bundles/images/te2.jpg" class="mr-3 img-fluid" alt="image"
-             style="outline: none; cursor: inherit;">
-        <div class="media-body mt-4">
-            <h5 class="mt-0 editContent"
-                style="outline: none; cursor: inherit;">Daniel Doe</h5>
-            <p class="mt-2 editContent" style="outline: none; cursor: inherit;">
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-                scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-                vulputate at, tempus viverra turpis.
-            </p>
-            <div class="media mt-5 editContent"
-                 style="outline: none; cursor: inherit;">
-                <a class="pr-3" href="#">
-                    <img src="bundles/images/te1.jpg" class="img-fluid "
-                         alt="image" style="outline: none; cursor: inherit;">
-                </a>
-                <div class="media-body">
-                    <h5 class="mt-0 editContent"
-                        style="outline: none; cursor: inherit;">Leia Organa</h5>
-                    <p class="mt-2 editContent"
-                       style="outline: none; cursor: inherit;"> Cras sit amet
-                        nibh libero, in gravida nulla. Nulla vel metus
-                        scelerisque ante sollicitudin. Cras purus odio,
-                        vestibulum in vulputate at, tempus viverra turpis. Fusce
-                        condimentum nunc ac nisi vulputate fringilla..</p>
+
+    </div>
+        <div>
+        {% for review in album.get_review %}
+            <div class="media py-5">
+                <img src="{% static 'default_images/default-avatar.jpg' %}" class="mr-3 img-fluid avatar_image" alt="image">
+                <div class="media-body mt-3">
+                    <h5 class="mt-0 editContent">{{ review.name }}</h5>
+                    <p class="mt-2 editContent">
+                        {{ review.text }}
+                    </p>
+                    <a href="#formReview" onclick="addReview('{{ review.name }}', '{{ review.id }}')">Ответить</a>
+                    {% for answer in review.reviews_set.all %}
+                    <div class="media mt-5 editContent">
+                            <img src="{% static 'default_images/default-avatar.jpg' %}" class="mr-3 img-fluid avatar_image" alt="image">
+                        <div class="media-body mt-3">
+                            <h5 class="mt-0 editContent">{{ answer.name }}</h5>
+                            <p class="mt-2 editContent">{{ answer.text }} </p>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
+        {% endfor %}
         </div>
-    </div>
 </div>
-</div>
+    <script>
+    function addReview(name, id){
+        document.getElementById('contactparent').value = id;
+        document.getElementById('contactcomment').innerText = `${name}, `;
 
+    }
+    </script>
 {% endblock %}
