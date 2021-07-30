@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import date
 
+from django.urls import reverse
+
 
 class Band(models.Model):
     name = models.CharField('Группа', max_length=150)
@@ -63,6 +65,10 @@ class Album(models.Model):
     class Meta:
         verbose_name = 'Альбом'
         verbose_name_plural = 'Альбомы'
+
+    def get_absolute_url(self):
+        return reverse('movie_detail', kwargs={'slug': self.url})
+
 
 
 class Images(models.Model):
