@@ -86,7 +86,7 @@
         {% endfor %}
     </p>
     <p class="editContent" style="outline: none; cursor: inherit;">
-        {{ album.description }}
+        {{ album.description | safe }}
     </p>
 </div>
 <hr>

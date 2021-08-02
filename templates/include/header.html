@@ -1,3 +1,4 @@
+{%  load album_tag %}
 <div class="main-banner bg bg1" id="home" style="background-color: rgba(0, 0, 0, 0); margin-top: 0px;">
     <!-- header -->
     <header class="header">
@@ -18,8 +19,10 @@
                         <a href="#">Группы <span class="fa fa-angle-down" aria-hidden="true"></span></a>
                         <input type="checkbox" id="drop-2">
                         <ul>
-                            <li><a href="moviesingle.html">Nirvana</a></li>
-                            <li><a href="moviesingle.html">Foo fighters</a></li>
+                            {% get_bands as bands %}
+                            {% for band in bands %}
+                                 <li><a href="#">{{ band.name }}</a></li>
+                            {% endfor %}
                         </ul>
                     </li>
                     <li><a href="contact.html" style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">Вход</a></li>

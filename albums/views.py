@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 
-from .models import Album, ArtistLabel
+from .models import Album, ArtistLabel, Band
 from .forms import ReviewForm
 
 

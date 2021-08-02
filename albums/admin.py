@@ -1,7 +1,17 @@
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
+from django import forms
 from .models import *
+
+
+class AlbumAdminForm(forms.ModelForm):
+    description = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Album
+        fields = '__all__'
 
 
 @admin.register(Band)
@@ -33,6 +43,7 @@ class AlbumAdmin(admin.ModelAdmin):
     list_filter = ('category', 'year',)
     search_fields = ('title', 'category__name')
     inlines = [AlbumImagesInLine, ReviewInLine]
+    form = AlbumAdminForm
     save_on_top = True
     save_as = True
     list_editable = ('draft',)
