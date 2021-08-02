@@ -1,10 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% load static %}
+
+{% block content %}
+
+    <div class="left-ads-display col-lg-8">
+        <div class="row">
+            <div class="desc1-left col-md-6">
+                <img src="{{ artistlabel.image.url }}" class="img-fluid" alt="">
+            </div>
+            <div class="desc1-right col-md-6 pl-lg-4">
+                <h3 class="editContent">
+                    {{ artistlabel.title }}
+                </h3>
+                <h5 class="editContent"></h5>
+                <ul>
+                    {% if artistlabel.age %}
+                    <li>
+                        <span><b>Возраст:</b> {{ artistlabel.age }}</span></li>
+                    {% endif %}
+                    {% if artistlabel.album_artist.all %}
+                    <li>
+                        <span><b>Выпустил альбомы:</b>
+                            {% for album in artistlabel.album_artist.all %}
+                                <a href="{% url 'album_detail' album.url %}">{{ album.title }}</a>,
+                            {% endfor %}
+                        </span>
+                    </li>
+                    {% endif %}
+                    {% if artistlabel.album_label.all %}
+                    <li><span><b>Выпустил альбомы:</b>
+                        {% for album in artistlabel.album_label.all %}
+                            <a href="{% url 'album_detail' album.url %}">{{ album.title }}</a>,
+                        {% endfor %}
+                    </span>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div class="row sub-para-w3layouts mt-5">
+            <h3 class="shop-sing editContent">
+                {{ artistlabel.name }}
+            </h3>
+            <p class="editContent">
+                {{ artistlabel.description|safe }}
+            </p>
+        </div>
+    </div>
+{% endblock %}

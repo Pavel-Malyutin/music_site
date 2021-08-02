@@ -16,6 +16,10 @@ class Band(models.Model):
         verbose_name = 'Группа'
         verbose_name_plural = 'Группы'
 
+    def get_albums(self):
+        albums = Album.objects.filter(category=self)
+        return albums
+
 
 class ArtistLabel(models.Model):
     name = models.CharField('Имя', max_length=256)

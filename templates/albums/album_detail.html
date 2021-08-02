@@ -17,8 +17,19 @@
             <li style="list-style: none"><span><b>Год:</b> {{ album.year }}</span></li>
             <li style="list-style: none"><span><b>Страна:</b> {{ album.country }}</span></li>
             <li style="list-style: none">
-                <span><b>Лейбл:</b> {% for lable in album.label.all %}{{ lable }} {% endfor %}</span></li>
-            <li style="list-style: none"><span><b>Музыканты:</b> {% for artist in album.artist.all %}<a href="">{{ artist }}</a> {% endfor %}</span></li>
+                <span><b>Лейбл:</b>
+                    {% for lable in album.label.all %}
+                        <a href="{% url 'artist_detail' lable.name %}">{{ lable.name }}</a>,
+                    {% endfor %}
+                </span>
+            </li>
+            <li style="list-style: none">
+                <span><b>Музыканты:</b>
+                    {% for artist in album.artist.all %}
+                        <a href="{% url 'artist_detail' artist.name %}">{{ artist.name }}</a>,
+                    {% endfor %}
+                </span>
+            </li>
             <li style="list-style: none"><span><b>Жанр:</b> {% for genre in album.genres.all %}{{ genre }} {% endfor %}</span>
             </li>
             <li style="list-style: none"><span><b>Дата выхода</b> {{ album.premiere }}</span>

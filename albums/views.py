@@ -18,14 +18,18 @@ class AlbumDetailView(DetailView):
     slug_field = 'url'
 
 
-class ArtistDetailView(View):
+class ArtistView(DetailView):
 
-    def get(self, request, slug):
-        artist = ArtistLabel.objects.get(url=slug)
-        context = {
-            'artist': artist,
-        }
-        return render(request, 'artist_detail.html', context)
+    model = ArtistLabel
+    template_name = 'albums/artist.html'
+    slug_field = 'name'
+
+
+class BandView(DetailView):
+
+    model = Band
+    template_name = 'albums/band.html'
+    slug_field = 'name'
 
 
 class AddReview(View):

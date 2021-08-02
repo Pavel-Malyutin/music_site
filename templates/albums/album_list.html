@@ -19,7 +19,7 @@
 
                     <div class="product_price">
                         <div class="grid-price">
-                            <span class="money editContent" >{{ album.category.name }}</span>
+                            <a href="{% url 'band_detail' album.category.name %}"><span class="money editContent" >{{ album.category.name }}</span></a>
                         </div>
                     </div>
                     <ul class="stars">
