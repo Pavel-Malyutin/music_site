@@ -16,10 +16,14 @@ class GenreYear:
     def get_years(self):
         return Album.objects.filter(draft=False)
 
+    def get_country(self):
+        return Album.objects.order_by().values('country').distinct()
+
 
 class AlbumView(GenreYear, ListView):
     model = Album
-    queryset = Album.objects.filter(draft=False)
+    queryset = Album.objects.filter(draft=False).distinct()
+    paginate_by = 6
 
 
 class AlbumDetailView(GenreYear, DetailView):
@@ -58,12 +62,22 @@ class AddReview(View):
 
 
 class FilterAlbumsView(GenreYear, ListView):
+    paginate_by = 1
+
     def get_queryset(self):
         queryset = Album.objects.filter(
             Q(year__in=self.request.GET.getlist('year')) |
+            Q(country__in=self.request.GET.getlist('country')) |
             Q(genres__in=self.request.GET.getlist('genre'))
-        )
+        ).distinct()
         return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['year'] = ''.join([f"year={x}&" for x in self.request.GET.getlist('year')])
+        context['country'] = ''.join([f"country={x}&" for x in self.request.GET.getlist('country')])
+        context['genre'] = ''.join([f"genre={x}&" for x in self.request.GET.getlist('genre')])
+        return context
 
 
 class AddStarRating(View):

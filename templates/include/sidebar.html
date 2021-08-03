@@ -31,6 +31,17 @@
                 {% endfor %}
             </ul>
         </div>
+        <div class="left-side">
+            <h3 class="sear-head editContent mt-4" >Страна</h3>
+            <ul class="w3layouts-box-list">
+                {% for album in view.get_country %}
+                <li class="editContent" >
+                    <input type="checkbox" class="checked" name="country" value="{{ album.country }}">
+                    <span class="span editContent" >{{ album.country }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
         <button type="submit" class="btn btn-dark mt-4">Найти</button>
     </form>
     <div class="mt-5">
