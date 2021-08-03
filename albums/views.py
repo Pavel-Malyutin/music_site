@@ -30,9 +30,22 @@ class AlbumDetailView(GenreYear, DetailView):
     model = Album
     slug_field = 'url'
 
+    # def get_user_ip(self, request):
+    #     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    #     if x_forwarded_for:
+    #         ip = x_forwarded_for.split(',')[-1].strip()
+    #     else:
+    #         ip = request.META.get('REMOTE_ADDR')
+    #     return ip
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['star_form'] = RatingForm()
+        # try:
+        #     rating = Rating.objects.filter(ip=self.get_user_ip(self.request)).values('star__rating')
+        #     context['user_rating'] = rating['star__rating']
+        # except:
+        #     context['user_rating'] = None
         return context
 
 
@@ -62,7 +75,7 @@ class AddReview(View):
 
 
 class FilterAlbumsView(GenreYear, ListView):
-    paginate_by = 1
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = Album.objects.filter(
@@ -100,3 +113,16 @@ class AddStarRating(View):
             return HttpResponse(status=201)
         else:
             return HttpResponse(status=400)
+
+
+class Search(ListView):
+    paginate_by = 6
+
+    def get_queryset(self):
+        return Album.objects.filter(title__icontains=self.request.GET.get('q'))
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['q'] = f"q={self.request.GET.get('q')}&"
+        return context
+

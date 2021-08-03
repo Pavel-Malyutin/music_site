@@ -1005,7 +1005,6 @@ ul.w3layouts-box-list li {
 }
 
 .grid-img-right {
-    background: url(../images/single.jpg)no-repeat center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -1025,7 +1024,7 @@ ul.w3layouts-box-list li {
     font-size: 0.9em;
     text-transform: uppercase;
     font-weight: 600;
-    text-decoration: none
+    text-decoration: none;
     padding: 0;
 
 }
@@ -1045,7 +1044,6 @@ ul.w3layouts-box-list li {
     font-size: 1.3em;
     color: #62676b;
     line-height: 1.5em;
-    -webkit-text-stroke: 0.2px;
     font-weight: 400;
 }
 

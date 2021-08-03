@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     path('', views.AlbumView.as_view(), name='index'),
     path('filter/', views.FilterAlbumsView.as_view(), name='filter'),
+    path('search/', views.Search.as_view(), name='search'),
     path('add-rating/', views.AddStarRating.as_view(), name='add_rating'),
     path('<slug:slug>/', views.AlbumDetailView.as_view(), name='album_detail'),
     path('review/<int:pk>/', views.AddReview.as_view(), name='add_review'),
