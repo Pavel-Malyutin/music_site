@@ -84,5 +84,12 @@ class ImagesAdmin(admin.ModelAdmin):
 
 admin.site.register(RatingStar)
 
+
+@admin.register(Rating)
+class AlbumRating(admin.ModelAdmin):
+    list_display = ('ip', 'star', 'album')
+
+
+
 admin.site.site_title = 'Панель администрирования'
 admin.site.site_header = 'Панель администрирования'

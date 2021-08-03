@@ -38,52 +38,31 @@
                 <span><b>Прослушиваний:</b> {{ album.streams }}</span></li>
 
             <li style="list-style: none">
-                <a href="#"><b>Рейтинг:</b>
-                <span class="fa fa-star" aria-hidden="true"
-                      style="outline: none; cursor: inherit;"></span>
-                    <span class="fa fa-star" aria-hidden="true"
-                          style="outline: none; cursor: inherit;"></span>
-                    <span class="fa fa-star" aria-hidden="true"
-                          style="outline: none; cursor: inherit;"></span>
-                    <span class="fa fa-star" aria-hidden="true"
-                          style="outline: none; cursor: inherit;"></span>
-                    <span class="fa fa-star" aria-hidden="true"
-                          style="outline: none; cursor: inherit;"></span>
-                    <span class="editContent"
-                          style="outline: none; cursor: inherit;">5.0</span>
-                </a>
+                <form action="{% url 'add_rating' %}" method="post" name="rating">
+                    {% csrf_token %}
+                    <b>Ваш рейтинг:</b>
+                    <input type="hidden" value="{{ album.id }}" name="album">
+                    <span class="rating">
+                        {% for k, v in star_form.fields.star.choices %}
+                            <input id="rating{{ v }}" type="radio" name="star"
+                                   value="{{ k }}">
+                            <label for="rating{{ v }}">{{ k }}</label>
+                        {% endfor %}
+                    </span>
+                </form>
             </li>
-            <div class="share-desc">
-                <div class="share">
-                    <h4 class="editContent"
-                        style="outline: none; cursor: inherit;">
-                        Share:</h4>
-                    <ul class="w3layouts_social_list list-unstyled">
-                        <li>
-                            <a href="#" class="w3pvt_facebook editContent"
-                               style="outline: none; cursor: inherit;">
-                            <span class="fa fa-facebook-f"
-                                  style="outline: none; cursor: inherit;"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="w3pvt_twitter editContent"
-                               style="outline: none; cursor: inherit;">
-                            <span class="fa fa-twitter"
-                                  style="outline: none; cursor: inherit;"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="w3pvt_dribble editContent"
-                               style="outline: none; cursor: inherit;">
-                            <span class="fa fa-dribbble"
-                                  style="outline: none; cursor: inherit;"></span>
-                            </a>
-                        </li>
+            <li style="list-style: none">
+                <span class="rating_all">
+                    <ul class="stars">
+                        <b class="mr-2">Общий рейтинг {{ album.user_rating }} {{ album.average_rating }}:</b>
+                        <i class="fa fa-star{% if album.average_rating == 0.5 %}-half-o{% elif album.average_rating < 1 %}-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if album.average_rating == 1.5 %}-half-o{% elif album.average_rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if album.average_rating == 2.5 %}-half-o{% elif album.average_rating < 3 %}-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if album.average_rating == 3.5 %}-half-o{% elif album.average_rating < 4 %}-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if album.average_rating == 4.5 %}-half-o{% elif album.average_rating < 5 %}-o {% endif %}" aria-hidden="true"></i>
                     </ul>
-                </div>
-                <div class="clearfix"></div>
-            </div>
+                </span>
+            </li>
         </ul>
     </div>
 </div>
@@ -174,4 +153,7 @@
 
     }
     </script>
+
+
+
 {% endblock %}

@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import date
 
+from django.db.models import Avg
 from django.urls import reverse
 
 
@@ -76,6 +77,13 @@ class Album(models.Model):
     def get_review(self):
         return self.reviews_set.filter(parent__isnull=True)
 
+    def average_rating(self):
+        reviews = Rating.objects.filter(album=self).aggregate(average=Avg('star'))
+        avg = 0
+        if reviews['average'] is not None:
+            avg = float(reviews['average'])
+        return avg
+
 
 class Images(models.Model):
     title = models.CharField('Заголовок', max_length=100)
@@ -95,11 +103,12 @@ class RatingStar(models.Model):
     value = models.SmallIntegerField('Значение', default=0)
 
     def __str__(self):
-        return self.value
+        return str(self.value)
 
     class Meta:
         verbose_name = 'Звезда рейтинга'
         verbose_name_plural = 'Звезды рейтинга'
+        ordering = ['-value']
 
 
 class Rating(models.Model):

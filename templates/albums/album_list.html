@@ -18,16 +18,16 @@
                     </h4>
 
                     <div class="product_price">
-                        <div class="grid-price">
+                        <div class="grid-price ">
                             <a href="{% url 'band_detail' album.category.name %}"><span class="money editContent" >{{ album.category.name }}</span></a>
                         </div>
                     </div>
-                    <ul class="stars">
-                        <li><a href="#"><span class="fa fa-star" aria-hidden="true" ></span></a></li>
-                        <li><a href="#"><span class="fa fa-star" aria-hidden="true" ></span></a></li>
-                        <li><a href="#"><span class="fa fa-star-half-o" aria-hidden="true" ></span></a></li>
-                        <li><a href="#"><span class="fa fa-star-half-o" aria-hidden="true" ></span></a></li>
-                        <li><a href="#"><span class="fa fa-star-o" aria-hidden="true" ></span></a></li>
+                    <ul class="stars mt-3">
+                        <i class="fa fa-star{% if album.average_rating == 0.5 %}-half-o{% elif album.average_rating < 1 %}-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if album.average_rating == 1.5 %}-half-o{% elif album.average_rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if album.average_rating == 2.5 %}-half-o{% elif album.average_rating < 3 %}-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if album.average_rating == 3.5 %}-half-o{% elif album.average_rating < 4 %}-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if album.average_rating == 4.5 %}-half-o{% elif album.average_rating < 5 %}-o {% endif %}" aria-hidden="true"></i>
                     </ul>
                 </div>
             </div>
