@@ -5,128 +5,122 @@
 {% block content %}
 
 <div class="left-ads-display col-lg-8">
-<div class="row">
-    <div class="desc1-left col-md-6">
-        <img src="{{ album.cover.url }}" class="img-fluid" alt="">
-    </div>
-    <div class="desc1-right col-md-6 pl-lg-4">
-        <h3 class="editContent" style="outline: none; cursor: inherit;">
-            {{ album.title }}</h3>
-        <ul>
-            <li style="list-style: none"><span><b>Группа:</b> {{ album.category }}</span></li>
-            <li style="list-style: none"><span><b>Год:</b> {{ album.year }}</span></li>
-            <li style="list-style: none"><span><b>Страна:</b> {{ album.country }}</span></li>
-            <li style="list-style: none">
-                <span><b>Лейбл:</b>
-                    {% for lable in album.label.all %}
-                        <a href="{% url 'artist_detail' lable.name %}">{{ lable.name }}</a>,
-                    {% endfor %}
-                </span>
-            </li>
-            <li style="list-style: none">
-                <span><b>Музыканты:</b>
-                    {% for artist in album.artist.all %}
-                        <a href="{% url 'artist_detail' artist.name %}">{{ artist.name }}</a>,
-                    {% endfor %}
-                </span>
-            </li>
-            <li style="list-style: none"><span><b>Жанр:</b> {% for genre in album.genres.all %}{{ genre }} {% endfor %}</span>
-            </li>
-            <li style="list-style: none"><span><b>Дата выхода</b> {{ album.premiere }}</span>
-            </li>
-            <li style="list-style: none">
-                <span><b>Прослушиваний:</b> {{ album.streams }}</span></li>
-
-            <li style="list-style: none">
-                <form action="{% url 'add_rating' %}" method="post" name="rating">
-                    {% csrf_token %}
-                        <b>Ваша оценка:</b>
-                    {% if user_rating %}
-                        {{ user_rating }}
-                    {% else %}
-                        <input type="hidden" value="{{ album.id }}" name="album">
-                        <span class="rating">
-                            {% for k, v in star_form.fields.star.choices %}
-                                <input id="rating{{ v }}" type="radio" name="star"
-                                       value="{{ k }}">
-                                <label for="rating{{ v }}">{{ k }}</label>
-                            {% endfor %}
-                        </span>
-                    {% endif %}
-                </form>
-            </li>
-            <li style="list-style: none">
-                <span class="rating_all">
-                    <ul class="stars">
-                        <b class="mr-2">Общий рейтинг:</b>
-                        <i class="fa fa-star{% if album.average_rating == 0.5 %}-half-o{% elif album.average_rating < 1 %}-o {% endif %}" aria-hidden="true"></i>
-                        <i class="fa fa-star{% if album.average_rating == 1.5 %}-half-o{% elif album.average_rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
-                        <i class="fa fa-star{% if album.average_rating == 2.5 %}-half-o{% elif album.average_rating < 3 %}-o {% endif %}" aria-hidden="true"></i>
-                        <i class="fa fa-star{% if album.average_rating == 3.5 %}-half-o{% elif album.average_rating < 4 %}-o {% endif %}" aria-hidden="true"></i>
-                        <i class="fa fa-star{% if album.average_rating == 4.5 %}-half-o{% elif album.average_rating < 5 %}-o {% endif %}" aria-hidden="true"></i>
-                    </ul>
-                </span>
-            </li>
-        </ul>
-    </div>
-</div>
-<div class="row sub-para-w3layouts mt-5">
-
-    <h3 class="shop-sing editContent" style="outline: none; cursor: inherit;">
-        Об альбоме {{ album.category }}: {{ album.title }}</h3><br>
-    <p>
-        {% for image in album.images_set.all %}
-        <img src="{{ image.image.url }}" class="img-fluid img-albums-covers" alt="{{ image.title }}">
-        {% endfor %}
-    </p>
-    <p class="editContent" style="outline: none; cursor: inherit;">
-        {{ album.description | safe }}
-    </p>
-</div>
-<hr>
-<div class="row">
-    <div class="single-form-left">
-        <!-- contact form grid -->
-        <div class="contact-single">
+    <div class="row">
+        <div class="desc1-left col-md-6">
+            <img src="{{ album.cover.url }}" class="img-fluid" alt="">
+        </div>
+        <div class="desc1-right col-md-6 pl-lg-4">
             <h3 class="editContent" style="outline: none; cursor: inherit;">
-                <p class="text-sm-start">Отзывов: {{ album.reviews_set.count }}</p>
-                <span class="sub-tittle editContent"
-                      style="outline: none; cursor: inherit;"></span>Оставить отзыв</h3>
-            <form action="{% url 'add_review' album.id %}" method="post" class="mt-4" id="formReview">
-                {% csrf_token %}
-                <input type="hidden" name="parent" id="contactparent" value="">
-                <div class="form-group editContent"
-                     style="outline: none; cursor: inherit;">
-                    <label for="contactcomment" class="editContent">
-                        Ваш комментарий *
-                    </label>
-                    <textarea class="form-control border" rows="5" id="contactcomment" required="" name="text"></textarea>
-                </div>
-                <div class="d-sm-flex">
-                    <div class="col-sm-6 form-group p-0 editContent"
-                         style="outline: none; cursor: inherit;">
-                        <label for="contactusername" class="editContent">
-                            Имя *
-                        </label>
-                        <input type="text" class="form-control border" id="contactusername" required="" name="name">
-                    </div>
-                    <div class="col-sm-6 form-group ml-sm-3 editContent">
-                        <label for="contactemail" class="editContent" style="outline: none; cursor: inherit;">
-                            Email *
-                        </label>
-                        <input type="email" class="form-control border" id="contactemail" required="" name="email">
-                    </div>
-                </div>
-                <button type="submit"
-                        class="mt-3 btn btn-success btn-block py-3"
-                        style="outline: none; cursor: inherit;">Отправить
-                </button>
-            </form>
+                {{ album.title }}</h3>
+            <ul>
+                <li style="list-style: none"><span><b>Группа:</b> {{ album.category }}</span></li>
+                <li style="list-style: none"><span><b>Год:</b> {{ album.year }}</span></li>
+                <li style="list-style: none"><span><b>Страна:</b> {{ album.country }}</span></li>
+                <li style="list-style: none">
+                    <span><b>Лейбл:</b>
+                        {% for lable in album.label.all %}
+                            <a href="{% url 'artist_detail' lable.name %}">{{ lable.name }}</a>,
+                        {% endfor %}
+                    </span>
+                </li>
+                <li style="list-style: none">
+                    <span><b>Музыканты:</b>
+                        {% for artist in album.artist.all %}
+                            <a href="{% url 'artist_detail' artist.name %}">{{ artist.name }}</a>,
+                        {% endfor %}
+                    </span>
+                </li>
+                <li style="list-style: none">
+                    <span><b>Жанр:</b> {% for genre in album.genres.all %}{{ genre }} {% endfor %}</span>
+                </li>
+                <li style="list-style: none">
+                    <span><b>Дата выхода</b> {{ album.premiere }}</span>
+                </li>
+                <li style="list-style: none">
+                    <span><b>Прослушиваний:</b> {{ album.streams }}</span>
+                </li>
+                <li style="list-style: none">
+                    <form action="{% url 'add_rating' %}" method="post" name="rating">
+                        {% csrf_token %}
+                            <b>Ваша оценка:</b>
+                        {% if user_rating %}
+                            {{ user_rating }}
+                        {% else %}
+                            <input type="hidden" value="{{ album.id }}" name="album">
+                            <span class="rating">
+                                {% for k, v in star_form.fields.star.choices %}
+                                    <input id="rating{{ v }}" type="radio" name="star"
+                                           value="{{ k }}">
+                                    <label for="rating{{ v }}">{{ k }}</label>
+                                {% endfor %}
+                            </span>
+                        {% endif %}
+                    </form>
+                </li>
+                <li style="list-style: none">
+                    <span class="rating_all">
+                        <ul class="stars">
+                            <b class="mr-2">Общий рейтинг:</b>
+                            <i class="fa fa-star{% if album.average_rating == 0.5 %}-half-o{% elif album.average_rating < 1 %}-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if album.average_rating == 1.5 %}-half-o{% elif album.average_rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if album.average_rating == 2.5 %}-half-o{% elif album.average_rating < 3 %}-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if album.average_rating == 3.5 %}-half-o{% elif album.average_rating < 4 %}-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if album.average_rating == 4.5 %}-half-o{% elif album.average_rating < 5 %}-o {% endif %}" aria-hidden="true"></i>
+                        </ul>
+                    </span>
+                </li>
+            </ul>
         </div>
     </div>
-
+    <div class="row sub-para-w3layouts mt-5">
+        <h3 class="shop-sing editContent" style="outline: none; cursor: inherit;">
+            Об альбоме {{ album.category }}: {{ album.title }}</h3><br>
+        <p>
+            {% for image in album.images_set.all %}
+                <img src="{{ image.image.url }}" class="img-fluid img-albums-covers" alt="{{ image.title }}">
+            {% endfor %}
+        </p>
+        <p class="editContent" style="outline: none; cursor: inherit;">
+            {{ album.description | safe }}
+        </p>
     </div>
-        <div>
+    <hr>
+    <div class="row">
+        <div class="single-form-left">
+            <div class="contact-single">
+                <h3 class="editContent" style="outline: none; cursor: inherit;">
+                    <p class="text-sm-start">Отзывов: {{ album.reviews_set.count }}</p>
+                    <span class="sub-tittle editContent" style="outline: none; cursor: inherit;"></span>Оставить отзыв
+                </h3>
+                <form action="{% url 'add_review' album.id %}" method="post" class="mt-4" id="formReview">
+                    {% csrf_token %}
+                    <input type="hidden" name="parent" id="contactparent" value="">
+                    <div class="form-group editContent" style="outline: none; cursor: inherit;">
+                        <label for="contactcomment" class="editContent">
+                            Ваш комментарий *
+                        </label>
+                        <textarea class="form-control border" rows="5" id="contactcomment" required="" name="text"></textarea>
+                    </div>
+                    <div class="d-sm-flex">
+                        <div class="col-sm-6 form-group p-0 editContent" style="outline: none; cursor: inherit;">
+                            <label for="contactusername" class="editContent">
+                                Имя *
+                            </label>
+                            <input type="text" class="form-control border" id="contactusername" required="" name="name">
+                        </div>
+                        <div class="col-sm-6 form-group ml-sm-3 editContent">
+                            <label for="contactemail" class="editContent" style="outline: none; cursor: inherit;">
+                                Email *
+                            </label>
+                            <input type="email" class="form-control border" id="contactemail" required="" name="email">
+                        </div>
+                    </div>
+                    <button type="submit" class="mt-3 btn btn-success btn-block py-3" style="outline: none; cursor: inherit;">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div>
         {% for review in album.get_review %}
             <div class="media py-5">
                 <img src="{% static 'default_images/default-avatar.jpg' %}" class="mr-3 img-fluid avatar_image" alt="image">
@@ -148,16 +142,12 @@
                 </div>
             </div>
         {% endfor %}
-        </div>
+    </div>
 </div>
-    <script>
+<script>
     function addReview(name, id){
         document.getElementById('contactparent').value = id;
         document.getElementById('contactcomment').innerText = `${name}, `;
-
     }
-    </script>
-
-
-
+</script>
 {% endblock %}

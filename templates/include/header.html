@@ -1,22 +1,23 @@
 {%  load album_tag %}
 <div class="main-banner bg bg1" id="home" style="background-color: rgba(0, 0, 0, 0); margin-top: 0px;">
-    <!-- header -->
     <header class="header">
         <div class="container-fluid px-lg-5">
-            <!-- nav -->
             <nav class="py-4">
                 <div id="logo">
                     <h1> <a href="{% url 'index' %}" class="editContent">La música</a></h1>
                 </div>
-
                 <label for="drop" class="toggle">Menu</label>
                 <input type="checkbox" id="drop">
                 <ul class="menu mt-2">
                     <li class="active"><a href="{% url 'index' %}">Главная</a></li>
                     <li>
-                        <!-- First Tier Drop Down -->
-                        <label for="drop-2" class="toggle">Группы<span class="fa fa-angle-down" aria-hidden="true" ></span> </label>
-                        <a href="#">Группы <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+                        <label for="drop-2" class="toggle">
+                            Группы
+                            <span class="fa fa-angle-down" aria-hidden="true"></span>
+                        </label>
+                            <a>Группы
+                                <span class="fa fa-angle-down" aria-hidden="true"></span>
+                            </a>
                         <input type="checkbox" id="drop-2">
                         <ul>
                             {% get_bands as bands %}
@@ -27,7 +28,6 @@
                     </li>
                 </ul>
             </nav>
-
         </div>
     </header>
 </div>

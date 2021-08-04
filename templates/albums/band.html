@@ -3,35 +3,34 @@
 {% load static %}
 
 {% block content %}
-    <div class="left-ads-display col-lg-8">
-        <div class="row sub-para-w3layouts mt-5">
-            <h3 class="shop-sing editContent">
-                {{ band.name }}
-            </h3>
-            <p class="editContent">
-                {{ band.description|safe }}
-            </p>
-        </div>
+<div class="left-ads-display col-lg-8">
+    <div class="row sub-para-w3layouts mt-5">
+        <h3 class="shop-sing editContent">
+            {{ band.name }}
+        </h3>
+        <p class="editContent">
+            {{ band.description|safe }}
+        </p>
     </div>
-    <div class="left-ads-display col-lg-9">
-        <div class="row">
-           {% for album in band.get_albums %}
-                <div class="col-md-4 product-men">
-                        <div class="product-shoe-info editContent text-center mt-lg-4" >
-                            <div class="men-thumb-item">
-                                <a href="{% url 'album_detail' album.url %}">
-                                    <img src="{{ album.cover.url }}" class="img-fluid" alt="" >
-                                </a>
-                            </div>
-                            <div class="item-info-product">
-                                <h4 class="">
-                                    <a href="{% url 'album_detail' album.url %}" class="editContent" >{{ album.title }}</a>
-                                </h4>
-                            </div>
+</div>
+<div class="left-ads-display col-lg-9">
+    <div class="row">
+       {% for album in band.get_albums %}
+            <div class="col-md-4 product-men">
+                    <div class="product-shoe-info editContent text-center mt-lg-4" >
+                        <div class="men-thumb-item">
+                            <a href="{% url 'album_detail' album.url %}">
+                                <img src="{{ album.cover.url }}" class="img-fluid" alt="" >
+                            </a>
                         </div>
-                </div>
-           {% endfor %}
-        </div>
+                        <div class="item-info-product">
+                            <h4 class="">
+                                <a href="{% url 'album_detail' album.url %}" class="editContent" >{{ album.title }}</a>
+                            </h4>
+                        </div>
+                    </div>
+            </div>
+       {% endfor %}
     </div>
-
+</div>
 {% endblock %}
