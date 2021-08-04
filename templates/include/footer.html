@@ -1,9 +1,10 @@
+{% load contact_tags %}
 <footer class="editContent">
     <div class="container">
         <div class="row footer-top">
             <div class="col-lg-4 footer-grid_section_w3layouts">
                 <h2 class="logo-2 mb-lg-4 mb-3">
-                    <span class="fa" aria-hidden="true" >Описание в футере</span>
+                    <span class="fa" aria-hidden="true" >О нас</span>
                 </h2>
                 <p class="editContent" >
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -33,16 +34,9 @@
                 </ul>
             </div>
             <div class="col-lg-8 footer-right">
-                <div class="w3layouts-news-letter">
-                    <h3 class="footer-title text-uppercase editContent mb-lg-4 mb-3" >Newsletter</h3>
 
-                    <p class="editContent" >By subscribing to our mailing list you will always get latest news and updates from us.</p>
-                    <form action="#" method="post" class="w3layouts-newsletter">
-                        <input type="email" name="Email" class="editContent" placeholder="Enter your email..." required="" >
-                        <button class="btn1 btn" ><span class="fa fa-paper-plane-o" aria-hidden="true" ></span></button>
+                {% contact_form %}
 
-                    </form>
-                </div>
                 <div class="row mt-lg-4 bottom-w3layouts-sec-nav mx-0">
                     <div class="col-md-4 footer-grid_section_w3layouts">
                         <h3 class="footer-title text-uppercase editContent mb-lg-4 mb-3" >Разделы</h3>
