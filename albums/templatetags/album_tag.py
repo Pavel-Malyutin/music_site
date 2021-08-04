@@ -12,5 +12,5 @@ def get_bands():
 
 @register.inclusion_tag('albums/tags/last_albums.html')
 def get_last_albums(count=3):
-    albums = Album.objects.order_by('id')[:count]
+    albums = Album.objects.order_by('-id')[:count]
     return {'last_albums': albums}

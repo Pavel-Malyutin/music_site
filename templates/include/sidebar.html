@@ -9,7 +9,9 @@
             </button>
         </form>
     </div>
+
     <form action="{% url 'filter' %}" method="get">
+    {% if view.get_genres %}
         <div class="left-side my-4">
             <h3 class="sear-head editContent" >Жанры</h3>
             <ul class="w3layouts-box-list">
@@ -21,6 +23,8 @@
                 {% endfor %}
             </ul>
         </div>
+    {% endif %}
+    {% if view.get_years %}
         <div class="left-side">
             <h3 class="sear-head editContent" >Год</h3>
             <ul class="w3layouts-box-list">
@@ -32,6 +36,8 @@
                 {% endfor %}
             </ul>
         </div>
+    {% endif %}
+    {% if view.get_years %}
         <div class="left-side">
             <h3 class="sear-head editContent mt-4" >Страна</h3>
             <ul class="w3layouts-box-list">
@@ -43,7 +49,10 @@
                 {% endfor %}
             </ul>
         </div>
+    {% endif %}
+    {% if view.get_genres or view.get_years or view.get_years %}
         <button type="submit" class="btn btn-dark mt-4">Найти</button>
+    {% endif %}
     </form>
     <div class="mt-5">
         {% get_last_albums count=5 %}

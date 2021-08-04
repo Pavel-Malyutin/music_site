@@ -30,22 +30,22 @@ class AlbumDetailView(GenreYear, DetailView):
     model = Album
     slug_field = 'url'
 
-    # def get_user_ip(self, request):
-    #     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    #     if x_forwarded_for:
-    #         ip = x_forwarded_for.split(',')[-1].strip()
-    #     else:
-    #         ip = request.META.get('REMOTE_ADDR')
-    #     return ip
+    def get_user_ip(self, request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[-1].strip()
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['star_form'] = RatingForm()
-        # try:
-        #     rating = Rating.objects.filter(ip=self.get_user_ip(self.request)).values('star__rating')
-        #     context['user_rating'] = rating['star__rating']
-        # except:
-        #     context['user_rating'] = None
+        try:
+            rating = Rating.objects.filter(ip=self.request.META.get('REMOTE_ADDR')).filter(album=self.model)
+            context['user_rating'] = rating.get().star
+        except:
+            context['user_rating'] = None
         return context
 
 
