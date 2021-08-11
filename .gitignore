@@ -1,3 +1,5 @@
 /.idea/
 /venv/
 /music_site/local_settings.py
+/wq.txt
+/music_site/prod_settings.py
